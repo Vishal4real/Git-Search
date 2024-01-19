@@ -1,8 +1,7 @@
 const loader = document.getElementById("loader");
 const resultElement = document.getElementById('avatar-detail');
 
-// const topic = prompt("Enter the programming you would like to search for in the GitHub profile");
-loader.style.display = "block";
+
 
 resultElement.innerHTML = `<p> <strong> Search GitHub Id to Display The Content </strong> </p>`;
 
@@ -29,12 +28,13 @@ function getUserData() {
 
 function displayUserData(userData) {
   const imgElement = document.getElementById('avatar');
+
   resultElement.innerHTML = `
   <p ><strong>Name :</strong>    ${userData.name}</p>
-  <p ><strong>Username :</strong>    ${userData.login}</p>
+  <p ><strong>Username :</strong>    ${userData.login || 'No User Found'}</p>
   <p class="loc"><strong><i class="bi bi-geo-alt-fill"></i></strong>    ${userData.location || 'Not available'}</p>
-  <p class="repo-count"><strong>Public Repositories:</strong>    ${userData.public_repos}</p>
-  <p><strong><i class="bi bi-people-fill"></i> </strong>  ${userData.followers} <span class="followers">Followers</span>. ${userData.following} <span class="followers"> Following</span></p>
+  <p class="repo-count"><strong>Public Repositories:</strong>    ${userData.public_repos || '?'}</p>
+  <p><strong><i class="bi bi-people-fill"></i> </strong>  ${userData.followers || '?'} <span class="followers">Followers</span>. ${userData.following || '?'} <span class="followers"> Following</span></p>
     `;
   imgElement.innerHTML = `
     <img src="${userData.avatar_url}" alt="">
@@ -48,18 +48,17 @@ function repodetail(username) {
   loader.style.display = "block";
   // const username = prompt("enter username")
   const reposContainer = document.getElementById("repos-container");
-
+  reposContainer.innerHTML="";
   
   fetch(`https://api.github.com/users/${username}/repos`)
     .then(response => response.json())
     .then(repos => {
       loader.style.display = "none";
-      console.log(repos)
       reposContainer.innerHTML = "";
 
       repos.forEach(repo => {
         console.log(repo.language)
-        const lang = repo.language ? repo.language.toLowerCase() : "Not specified";
+       // const lang = repo.language ? repo.language.toLowerCase() : "Not specified";
 
 
        // if (lang === topic.toLowerCase()) {
