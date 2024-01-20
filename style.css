@@ -45,9 +45,11 @@ body {
   width: 300px;
 }
 
+
 .followers {
   font-size: 0.9rem;
 }
+
 
 .repo-count,
 .loc {
@@ -56,6 +58,7 @@ body {
 
 .user-input {
   display: flex;
+  flex-direction: column;
   margin-top: 10px;
   float: right;
   align-items: center;
@@ -67,10 +70,18 @@ body {
   height: 32px;
   width: 180px;
 }
+#select-opt{
+  background: none;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  padding: 8px;
+}
 
 .btn {
   border: 1px solid white;
   color: white;
+  margin-right: 38px;
 }
 
 @media (max-width:540px) {

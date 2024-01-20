@@ -1,12 +1,11 @@
 const loader = document.getElementById("loader");
 const resultElement = document.getElementById('avatar-detail');
-
-
-
 resultElement.innerHTML = `<p> <strong> Search GitHub Id to Display The Content </strong> </p>`;
 
 function getUserData() {
   const username = document.getElementById('username').value;
+  const perPage = document.getElementById('select-opt').value;
+  console.log(perPage)
   loader.style.display = "block";
 
   if (username === "") {
@@ -14,11 +13,12 @@ function getUserData() {
     return;
   }
   resultElement.innerHTML = "";
+  
   fetch(`https://api.github.com/users/${username}`)
     .then(response => response.json())
     .then(data => {
       loader.style.display = "none";
-      displayUserData(data);
+      displayUserData(data,perPage);
     })
     .catch(error => {
       console.error('Error fetching user data:', error);
@@ -26,7 +26,7 @@ function getUserData() {
     });
 }
 
-function displayUserData(userData) {
+function displayUserData(userData,perPage) {
   const imgElement = document.getElementById('avatar');
 
   resultElement.innerHTML = `
@@ -39,18 +39,19 @@ function displayUserData(userData) {
   imgElement.innerHTML = `
     <img src="${userData.avatar_url}" alt="">
   `;
-  document.getElementById('username').value = "";
-  repodetail(userData.login)
+  repodetail(userData.login,perPage)
 }
 
-function repodetail(username) {
-
+function repodetail(username,perPage) {
   loader.style.display = "block";
-  // const username = prompt("enter username")
   const reposContainer = document.getElementById("repos-container");
   reposContainer.innerHTML="";
+  //const perPage = prompt("Enter how many repos per page");
+  //const startIndex = 0;
+
+ console.log(perPage);
   
-  fetch(`https://api.github.com/users/${username}/repos`)
+  fetch(`https://api.github.com/users/${username}/repos?per_page=${perPage}`)
     .then(response => response.json())
     .then(repos => {
       loader.style.display = "none";
@@ -58,7 +59,7 @@ function repodetail(username) {
 
       repos.forEach(repo => {
         console.log(repo.language)
-       // const lang = repo.language ? repo.language.toLowerCase() : "Not specified";
+        const lang = repo.language ? repo.language.toLowerCase() : "Not specified";
 
 
        // if (lang === topic.toLowerCase()) {
@@ -73,10 +74,10 @@ function repodetail(username) {
             <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer"><p class="repo-link"> Visit Repository  <i class="bi bi-link-45deg"></i></p></a>
           </div>
           `;
-
           reposContainer.appendChild(repoElement);
         //}
       });
+
     })
     .catch(error => {
       loader.style.display = "none";

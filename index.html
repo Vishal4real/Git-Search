@@ -11,28 +11,34 @@
   <!-- For Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
   <div id="loader"></div>
-  <div class="container main-cont border border-dark w-200  my-2">
-    <div class="user-input ">
-      <label for="textip">Enter GitHub Id :</label>
-      <input type="text" id="username" placeholder="ex:Vishal4real">
-      <button class="btn" onclick="getUserData()">Get Data</button>
+  <div class="container main-cont border border-dark w-200 my-2">
+    <div class="user-input">
+      <div class="ip-box">
+        <label for="textip">Enter GitHub Id :</label>
+        <input type="text" id="username" placeholder="ex:Vishal4real">
+      </div>
+      <div class="per-page">
+        <label for="select-opt">Enter Repositories Per Page :</label>
+        <select id="select-opt">
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        <button class="btn" onclick="getUserData()">Get Data</button>
+      </div>
     </div>
-    <div class="user-detail ">
-      <div id="avatar">
-      </div>
-      <div id="avatar-detail">
-      </div>
+    <div class="user-detail">
+      <div id="avatar"></div>
+      <div id="avatar-detail"></div>
     </div>
     <hr>
-    <div id="repos-container" class="repos-container">
-    </div>
+    <div id="repos-container" class="repos-container"></div>
   </div>
-
   <script src="app.js"></script>
 </body>
 
