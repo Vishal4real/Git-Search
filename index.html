@@ -19,7 +19,7 @@
     <div class="user-input">
       <div class="ip-box">
         <label for="textip">Enter GitHub Id :</label>
-        <input type="text" id="username" placeholder="ex:Vishal4real">
+        <input type="text" id="username" placeholder="ex:Vishal4real" required>
       </div>
       <div class="per-page">
         <label for="select-opt">Enter Repositories Per Page :</label>
@@ -31,13 +31,18 @@
         </select>
         <button class="btn" onclick="getUserData()">Get Data</button>
       </div>
+      <div id="page-container">
+          
+      </div>
     </div>
     <div class="user-detail">
       <div id="avatar"></div>
       <div id="avatar-detail"></div>
     </div>
     <hr>
-    <div id="repos-container" class="repos-container"></div>
+    <div id="repos-container" class="repos-container">
+      <h1 class="wlc-txt">Welcome To Git-Search<br>Enter Github ID to Search Git.</h1>
+    </div>
   </div>
   <script src="app.js"></script>
 </body>

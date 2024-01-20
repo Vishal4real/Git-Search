@@ -1,6 +1,9 @@
 const loader = document.getElementById("loader");
 const resultElement = document.getElementById('avatar-detail');
 resultElement.innerHTML = `<p> <strong> Search GitHub Id to Display The Content </strong> </p>`;
+const pagecontainer = document.getElementById("page-container");
+// let selectedPerPage;
+let currentPage = 1;
 
 function getUserData() {
   const username = document.getElementById('username').value;
@@ -45,11 +48,7 @@ function displayUserData(userData,perPage) {
 function repodetail(username,perPage) {
   loader.style.display = "block";
   const reposContainer = document.getElementById("repos-container");
-  reposContainer.innerHTML="";
-  //const perPage = prompt("Enter how many repos per page");
-  //const startIndex = 0;
-
- console.log(perPage);
+  reposContainer.innerHTML = "";
   
   fetch(`https://api.github.com/users/${username}/repos?per_page=${perPage}`)
     .then(response => response.json())
@@ -57,10 +56,12 @@ function repodetail(username,perPage) {
       loader.style.display = "none";
       reposContainer.innerHTML = "";
 
-      repos.forEach(repo => {
-        console.log(repo.language)
-        const lang = repo.language ? repo.language.toLowerCase() : "Not specified";
+     //let topic = prompt("Enter Topic To filter Repository")
+       const totalPages = Math.ceil(repos.length/10);
+     // repos = repos.slice((currentPage - 1) * perPage, currentPage * perPage);
 
+      repos.forEach(repo => {
+        const lang = repo.language ? repo.language.toLowerCase() : "Not specified";
 
        // if (lang === topic.toLowerCase()) {
           const repoElement = document.createElement("div");
@@ -70,14 +71,15 @@ function repodetail(username,perPage) {
           <div class="repo-container">
             <h3>${repo.name}</h3>
             <p>${repo.description || "No description available"}</p>
-            <p class="topic"> ${lang}</p>
+            <p class="topic"> ${lang.toUpperCase()}</p>
             <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer"><p class="repo-link"> Visit Repository  <i class="bi bi-link-45deg"></i></p></a>
           </div>
           `;
           reposContainer.appendChild(repoElement);
+          pagecontainer.innerHTML = `Page ${currentPage} of ${totalPages}`
         //}
       });
-
+     // addPageBtn(totalPages);
     })
     .catch(error => {
       loader.style.display = "none";
@@ -85,3 +87,20 @@ function repodetail(username,perPage) {
       reposContainer.innerHTML = "<p>Error fetching repositories. Please try again later.</p>";
     });
 }
+
+// function addPageBtn(totalPages){
+//   pagecontainer.innerHTML = "";
+//   for(let i =1 ;i<=totalPages;i++){
+//     const button = document.createElement("button");
+//     button.innerText = i;
+//     button.addEventListener("click",()=>{
+//       currentPage = i;
+//       loadRepos(userData.login);
+//     });
+//     pagecontainer.appendChild(button);
+//   }
+// }
+
+// function loadRepos(username) {
+//   repodetail(username, selectedPerPage);
+// }
